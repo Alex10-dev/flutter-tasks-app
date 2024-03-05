@@ -154,20 +154,33 @@ class _SubmitButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context).textTheme;
 
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll( colorScheme.onPrimaryContainer ),
-        padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(horizontal: 100, vertical: 12))
+    return Material(
+      borderRadius: BorderRadius.circular(14.0),
+      elevation: 6.0,
+      shadowColor: colorScheme.shadow,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14.0),
+        onTap: () {
+          FocusScope.of(context).unfocus();
+          if( _loginFormKey.currentState!.validate() ){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('creadentials are ok!'))
+            );
+          }
+        },
+        child: Ink(
+          padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Colors.blueAccent, colorScheme.onPrimaryContainer], // Cambia los colores según sea necesario
+            ),
+            borderRadius: BorderRadius.circular(14.0), // Ajusta el radio de borde según sea necesario
+          ),
+          child: Text('Sign in', style: textStyle.bodyLarge!.copyWith(color: colorScheme.onPrimary)),
+        ),
       ),
-      onPressed: () {
-        FocusScope.of(context).unfocus();
-        if( _loginFormKey.currentState!.validate() ){
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('creadentials are ok!'))
-          );
-        }
-      },
-      child: Text('Sign in', style: textStyle.bodyLarge!.copyWith(color: colorScheme.onPrimary),),
     );
   }
 }

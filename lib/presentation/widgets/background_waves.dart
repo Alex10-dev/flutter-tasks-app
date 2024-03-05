@@ -13,7 +13,9 @@ class BackgroundWaves extends StatelessWidget {
       width:  double.infinity,
 
       child: CustomPaint(
-        painter: _BackgroundWavesPainter(waveColor: colorScheme.onPrimaryContainer
+        painter: _BackgroundWavesPainter(
+          waveColor1: Colors.blueAccent,
+          waveColor2: colorScheme.onPrimaryContainer,
         ),
       ),
     );
@@ -23,22 +25,33 @@ class BackgroundWaves extends StatelessWidget {
 
 class _BackgroundWavesPainter extends CustomPainter {
 
-  final Color? waveColor;
+  final Color? waveColor1;
+  final Color? waveColor2;
 
   const _BackgroundWavesPainter({
-    this.waveColor = Colors.black,
+    this.waveColor1 = Colors.black,
+    this.waveColor2 = Colors.black,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
 
-    final paint = Paint();
-    paint.color = waveColor!;
-    paint.style = PaintingStyle.fill;
-    paint.strokeWidth = 10.0;
+    final topPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 10.0
+      ..shader = LinearGradient(
+        colors: [waveColor1!, waveColor2!],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromLTWH(0, -6, size.width, size.height * 0.28));
 
-    drawTopElement(canvas, size, paint);
-    drawBottomElement(canvas, size, paint);
+    final buttomPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 10.0
+      ..color = waveColor2!;
+
+    drawTopElement(canvas, size,topPaint);
+    drawBottomElement(canvas, size, buttomPaint);
     
   }
 
