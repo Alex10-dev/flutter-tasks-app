@@ -5,12 +5,16 @@ class BackgroundWaves extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return  SizedBox(
       height: double.infinity,
       width:  double.infinity,
 
       child: CustomPaint(
-        painter: _BackgroundWavesPainter(),
+        painter: _BackgroundWavesPainter(waveColor: colorScheme.onPrimaryContainer
+        ),
       ),
     );
   }
@@ -18,11 +22,18 @@ class BackgroundWaves extends StatelessWidget {
 
 
 class _BackgroundWavesPainter extends CustomPainter {
+
+  final Color? waveColor;
+
+  const _BackgroundWavesPainter({
+    this.waveColor = Colors.black,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
 
     final paint = Paint();
-    paint.color = const Color( 0xff615aab );
+    paint.color = waveColor!;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 10.0;
 
