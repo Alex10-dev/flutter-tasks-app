@@ -24,6 +24,11 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           color: colorScheme.onPrimary,
         ),
+        headlineMedium: GoogleFonts.roboto(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: colorScheme.onPrimary,
+        ),
         headlineSmall: GoogleFonts.roboto(
           fontSize: 24,
           fontWeight: FontWeight.normal,

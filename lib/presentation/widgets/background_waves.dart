@@ -14,7 +14,7 @@ class BackgroundWaves extends StatelessWidget {
 
       child: CustomPaint(
         painter: _BackgroundWavesPainter(
-          waveColor1: Colors.blueAccent,
+          waveColor1: colorScheme.primary,
           waveColor2: colorScheme.onPrimaryContainer,
         ),
       ),
@@ -43,7 +43,7 @@ class _BackgroundWavesPainter extends CustomPainter {
         colors: [waveColor1!, waveColor2!],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-      ).createShader(Rect.fromLTWH(0, -6, size.width, size.height * 0.28));
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height * 0.33));
 
     final buttomPaint = Paint()
       ..style = PaintingStyle.fill

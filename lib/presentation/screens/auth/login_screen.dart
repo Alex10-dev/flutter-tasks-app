@@ -43,7 +43,7 @@ class _HeaderText extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Welcome Back,', style: customTextStyles.headlineSmall),
-            Text('Sign in!', style: customTextStyles.displayMedium),
+            Text('Sign in!', style: customTextStyles.headlineMedium),
           ]
         ),
       )
@@ -93,6 +93,9 @@ class __LoginFormState extends State<_LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 32),
       // color: Colors.amber.withOpacity(0.2),
@@ -103,11 +106,15 @@ class __LoginFormState extends State<_LoginForm> {
           children: <Widget>[
             const SizedBox(height: 20,),
             InputText( 
+              inputIcon: const Icon( Icons.person ),
+              inputIconColor: colorScheme.primary,
               label: 'Username', 
               validationFunction: validateUsername, 
             ),
             const SizedBox( height: 18,),
             InputText( 
+              inputIcon: const Icon( Icons.key_outlined ),
+              inputIconColor: colorScheme.primary,
               label: 'Password', 
               validationFunction: validatePassword,
               hideInput: true,
@@ -174,7 +181,8 @@ class _SubmitButton extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Colors.blueAccent, colorScheme.onPrimaryContainer], // Cambia los colores según sea necesario
+              stops: const [0.1, 1],
+              colors: [colorScheme.primary, colorScheme.onPrimaryContainer], // Cambia los colores según sea necesario
             ),
             borderRadius: BorderRadius.circular(14.0), // Ajusta el radio de borde según sea necesario
           ),
