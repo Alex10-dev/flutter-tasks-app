@@ -8,16 +8,15 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final colorScheme = Theme.of(context).colorScheme;
+
     return  SafeArea(
       child: Scaffold(
+        backgroundColor: colorScheme.secondaryContainer,
         body: CustomScrollList(
           sliverBody: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
-              
-              return Container( 
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                color: Colors.red, child: Text('$index')
-              );
+              return TaskCard(index: index);
             },
             childCount: 100,
             )), 

@@ -25,7 +25,10 @@ class _CustomScrollListState extends State<CustomScrollList> {
       physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       slivers: <Widget>[
         CustomSliverAppBar( title: 'Titulo', opacity: _opacity),
-        widget.sliverBody,
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          sliver: widget.sliverBody,
+        ),
         SliverFillRemaining(
           hasScrollBody: false,
           child: Container(
