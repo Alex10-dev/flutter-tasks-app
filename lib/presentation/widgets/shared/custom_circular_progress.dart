@@ -7,13 +7,17 @@ class CustomCircularProgress extends StatefulWidget {
   final Color? progressColor;
   final double percent;
   final double? strokeWidth;
+  final String? text;
+  final TextStyle? textStyle;
 
   const CustomCircularProgress({
     super.key, 
     required this.percent, 
     this.strokeWidth = 10,
     this.circleBackground, 
-    this.progressColor,
+    this.progressColor, 
+    this.text, 
+    this.textStyle, 
   });
 
   @override
@@ -49,23 +53,32 @@ class _CustomCircularProgressState extends State<CustomCircularProgress> with Si
     oldPercent = widget.percent;
     progressController.forward(from: 0);
     
-    return AnimatedBuilder(
-      animation: progressController, 
-      builder: (context, child) {
-        return Container(
-          padding: EdgeInsets.all( widget.strokeWidth! * 0.5 ), //the half of the stroke paint
-          width: double.infinity,
-          height: double.infinity,
-          child: CustomPaint(
-            painter: _RadialProgress( 
-              percent: startPercent + (diferenceToAnimate * progressController.value),
-              backgroundColor: widget.circleBackground != null ? widget.circleBackground! : colorScheme.outlineVariant,
-              mainColor: widget.progressColor != null ? widget.progressColor! : colorScheme.primary,
-              strokeWidth: widget.strokeWidth!
-            ),
+    return Stack(
+      children: [
+        AnimatedBuilder(
+          animation: progressController, 
+          builder: (context, child) {
+            return Container(
+              padding: EdgeInsets.all( widget.strokeWidth! * 0.5 ), //the half of the stroke paint
+              width: double.infinity,
+              height: double.infinity,
+              child: CustomPaint(
+                painter: _RadialProgress( 
+                  percent: startPercent + (diferenceToAnimate * progressController.value),
+                  backgroundColor: widget.circleBackground != null ? widget.circleBackground! : colorScheme.outlineVariant,
+                  mainColor: widget.progressColor != null ? widget.progressColor! : colorScheme.primary,
+                  strokeWidth: widget.strokeWidth!
+                ),
+              ),
+            );
+          },
+        ),
+
+        if( widget.text != null )
+          Center(
+            child: Text(widget.text!, style: widget.textStyle )
           ),
-        );
-      },
+      ],
     );
   }
 }

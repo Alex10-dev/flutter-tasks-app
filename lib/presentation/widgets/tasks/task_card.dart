@@ -52,10 +52,12 @@ class TaskCard extends StatelessWidget {
                       height: 90,
                       width: 90,
                       child: CustomCircularProgress(
-                        percent: 60, 
+                        percent: 70, 
                         circleBackground: colorScheme.outlineVariant,
-                        progressColor: colorScheme.tertiary,
-                        strokeWidth: 14,
+                        progressColor: colorScheme.primary,
+                        strokeWidth: 13,
+                        text: '6/8',
+                        textStyle: textStyles.labelLarge!.copyWith(color: colorScheme.primary, fontWeight: FontWeight.bold),
                       )
                     )
                   ),

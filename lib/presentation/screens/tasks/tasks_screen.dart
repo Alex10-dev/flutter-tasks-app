@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_app/presentation/widgets/shared/custom_bottom_navbar.dart';
 import 'package:task_app/presentation/widgets/widgets.dart';
 
 class TasksScreen extends StatelessWidget {
@@ -16,12 +15,14 @@ class TasksScreen extends StatelessWidget {
         body: CustomScrollList(
           sliverBody: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
-              return TaskCard(index: index);
+              return SlideAnimation(
+                child: TaskCard(index: index)
+              );
             },
             childCount: 100,
             )), 
           ),
-        bottomNavigationBar: const CustomBottomNavbar(),
+        // bottomNavigationBar: const CustomBottomNavbar(),
       ),
     );
   }
