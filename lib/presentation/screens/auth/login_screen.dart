@@ -81,7 +81,7 @@ class _BottomText extends StatelessWidget {
 }
 
 class _LoginForm extends StatefulWidget {
-  const _LoginForm({super.key});
+  const _LoginForm();
 
   @override
   State<_LoginForm> createState() => __LoginFormState();
@@ -149,7 +149,6 @@ class __LoginFormState extends State<_LoginForm> {
 
 class _SubmitButton extends StatelessWidget {
   const _SubmitButton({
-    super.key,
     required GlobalKey<FormState> loginFormKey,
   }) : _loginFormKey = loginFormKey;
 

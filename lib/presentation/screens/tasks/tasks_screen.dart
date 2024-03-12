@@ -13,6 +13,9 @@ class TasksScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: colorScheme.secondaryContainer,
         body: CustomScrollList(
+          verticalPadding: 16,
+          horizontalPadding: 16,
+          title: 'Tareas asignadas',
           sliverBody: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               return SlideAnimation(
@@ -22,7 +25,7 @@ class TasksScreen extends StatelessWidget {
             childCount: 100,
             )), 
           ),
-        // bottomNavigationBar: const CustomBottomNavbar(),
+        bottomNavigationBar: const CustomBottomNavbar(),
       ),
     );
   }

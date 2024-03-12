@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 class CustomScrollList extends StatefulWidget {
 
   final Widget sliverBody;
+  final String title;
+  final double? verticalPadding;
+  final double? horizontalPadding;
 
   const CustomScrollList({
     super.key,
-    required this.sliverBody,
+    required this.sliverBody, 
+    required this.title, 
+    this.verticalPadding = 0, 
+    this.horizontalPadding = 0,
   });
 
   @override
@@ -24,15 +30,15 @@ class _CustomScrollListState extends State<CustomScrollList> {
       controller: _scrollController,
       physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       slivers: <Widget>[
-        CustomSliverAppBar( title: 'Titulo', opacity: _opacity),
+        CustomSliverAppBar( title: widget.title, opacity: _opacity),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: widget.verticalPadding!, horizontal: widget.horizontalPadding!),
           sliver: widget.sliverBody,
         ),
         SliverFillRemaining(
           hasScrollBody: false,
           child: Container(
-            color: Colors.blueAccent,
+            color: Colors.blueAccent.withOpacity(0),
           ),
         )
       ],
@@ -77,15 +83,22 @@ class CustomSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    // final textStyles = Theme.of(context).textTheme;
+    final textStyles = Theme.of(context).textTheme;
 
     return SliverAppBar(
       stretch: false,
+      collapsedHeight: 50,
+      toolbarHeight: 50,
       backgroundColor: colorScheme.primary,
-      titleSpacing: 0,
       title: Opacity(
         opacity: (opacity == 0) ? 1 : 0,
-        child: Text(title)
+        child: Text(
+          textAlign: TextAlign.end,
+          title, 
+          style: textStyles.titleMedium!.copyWith( 
+            color: colorScheme.onPrimary,
+          ),
+        )
       ),
       leading: IconButton( onPressed: () {}, icon: Icon( Icons.arrow_back_ios_new_rounded, color: colorScheme.onPrimary, ),),
       centerTitle: true,
@@ -97,10 +110,28 @@ class CustomSliverAppBar extends StatelessWidget {
       floating: false,
       expandedHeight: 100,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.zero,
-        title: Opacity(
-          opacity: opacity,
-          child: Text(title)
+        titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        expandedTitleScale: 1.3,
+        title: SizedBox(
+          height: 50,
+          width: double.infinity,
+          child: Opacity(
+            opacity: opacity,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                textAlign: TextAlign.start,
+                maxLines: 2,
+                title, 
+                style: textStyles.titleMedium!.copyWith(
+                  fontStyle: FontStyle.italic, 
+                  color: colorScheme.onPrimary,
+                  overflow: TextOverflow.ellipsis,
+                  height: 1.2,
+                ),
+              ),
+            )
+          ),
         ),
         background: Container(
           color: colorScheme.primary,
@@ -108,4 +139,4 @@ class CustomSliverAppBar extends StatelessWidget {
       ),
     );
   }
-}
+} 

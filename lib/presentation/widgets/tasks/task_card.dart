@@ -48,17 +48,14 @@ class TaskCard extends StatelessWidget {
                 children: <Widget>[
                   Align(
                     alignment: Alignment.topCenter,
-                    child: SizedBox(
-                      height: 90,
-                      width: 90,
-                      child: CustomCircularProgress(
-                        percent: 70, 
-                        circleBackground: colorScheme.outlineVariant,
-                        progressColor: colorScheme.primary,
-                        strokeWidth: 13,
-                        text: '6/8',
-                        textStyle: textStyles.labelLarge!.copyWith(color: colorScheme.primary, fontWeight: FontWeight.bold),
-                      )
+                    child: CustomCircularProgress(
+                      size: 90,
+                      percent: 70, 
+                      circleBackground: colorScheme.outlineVariant,
+                      progressColor: colorScheme.primary,
+                      strokeWidth: 13,
+                      text: '6/8',
+                      textStyle: textStyles.labelLarge!.copyWith(color: colorScheme.primary, fontWeight: FontWeight.bold),
                     )
                   ),
                   const SizedBox(width: 14),

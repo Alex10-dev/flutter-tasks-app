@@ -26,7 +26,7 @@ class _SlideAnimationState extends State<SlideAnimation> with SingleTickerProvid
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 800),
     );
 
     _slideAnimation = Tween<Offset>(

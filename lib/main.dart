@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tasks App',
       theme: AppTheme().get(),
-      home: const TasksScreen(),
+      home: const TaskDetailsScreen(),
     );
   }
 }
