@@ -40,7 +40,8 @@ class TaskDetailsScreen extends StatelessWidget {
                       titleCount: '3/8',
                       child: _TodosInfo(),
                     ),
-                    
+
+                    const SizedBox(height: 20),
                 
                   ],
                 );
@@ -49,6 +50,7 @@ class TaskDetailsScreen extends StatelessWidget {
             )
           ),
         ),
+        bottomNavigationBar: const CustomBottomNavbar(),
       ),
     );
   }
@@ -131,7 +133,7 @@ class _TodosInfo extends StatelessWidget {
       children: [
                     
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: CustomCircularProgress(
             progressColor: colorScheme.primary,
             percent: 30,
@@ -153,8 +155,15 @@ class _TodosInfo extends StatelessWidget {
             );
           },
         ),
+
+        AddTodoButton(
+          hintText: 'Añadir actividad...',
+          onSubmit: (String input) {},
+        )
       ],
     );
   }
 }
+
+
 
