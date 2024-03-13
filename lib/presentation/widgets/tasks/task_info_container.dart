@@ -32,17 +32,17 @@ class TaskInfoContainer extends StatelessWidget {
               children: [
                 Text(
                   title, 
-                  style: textStyle.titleLarge!.copyWith(fontSize: 18, color: colorScheme.onSurfaceVariant)
+                  style: textStyle.titleLarge!.copyWith(fontSize: 18, color: colorScheme.outline)
                 ),
                 if( titleCount != null)
                   Text(
                     titleCount!, 
-                    style: textStyle.titleLarge!.copyWith(fontSize: 18, color: colorScheme.onSurfaceVariant)
+                    style: textStyle.titleLarge!.copyWith(fontSize: 18, color: colorScheme.outline)
                   )
               ],
             ),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 12,),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
