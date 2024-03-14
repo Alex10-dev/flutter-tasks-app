@@ -5,12 +5,13 @@ class AppTheme {
 
   final _colorScheme = ColorScheme.fromSeed(
     seedColor: const Color(0xff37247C),
-    tertiary: const Color(0xFFD77B2B),
+    secondary: const Color(0xFFD77B2B),
   );
 
   ThemeData get(){
 
     return ThemeData(
+      brightness: Brightness.light,
       colorScheme: _colorScheme,
 
       textTheme: TextTheme(

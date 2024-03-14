@@ -9,20 +9,28 @@ class TaskDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: colorScheme.secondaryContainer,
-        body: CustomScrollList(
+      child: CustomScaffold(
+        fab: FloatingActionButton(
+          backgroundColor: colorScheme.primary,
+          shape: const CircleBorder(),
+          isExtended: false, 
+          onPressed: () {
+            
+          },
+          tooltip: 'Add',
+          child: Icon(Icons.search, size: 32, color: colorScheme.onPrimary,),
+        ),
+        child: CustomScrollList(
           title: 'Detalles de tarea',
           sliverBody: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Column(
                   children: <Widget>[
-
+        
                     const SizedBox(height: 20),
-
+        
                     TaskInfoContainer(
                       title: 'Descripción',
                       child:  _TaskDescription(
@@ -34,14 +42,14 @@ class TaskDetailsScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 40),
-                    
+
                     const TaskInfoContainer(
                       title: 'Por hacer',
                       titleCount: '3/8',
                       child: _TodosInfo(),
                     ),
-
-                    const SizedBox(height: 20),
+        
+                    const SizedBox(height: 100),
                 
                   ],
                 );
@@ -50,8 +58,7 @@ class TaskDetailsScreen extends StatelessWidget {
             )
           ),
         ),
-        bottomNavigationBar: const CustomBottomNavbar(),
-      ),
+      )
     );
   }
 }
@@ -135,6 +142,7 @@ class _TodosInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: CustomCircularProgress(
+            circleBackground: colorScheme.primaryContainer,
             progressColor: colorScheme.primary,
             percent: 30,
             size: 140,
@@ -144,22 +152,27 @@ class _TodosInfo extends StatelessWidget {
           ),
         ),
                     
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 6,
-          itemBuilder: (BuildContext context, int index) {
-            return TodoItem(
-              isCompleted: true,
-              index: index,
-            );
-          },
+        Container(
+          color: Colors.blue,
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: 8,
+            itemBuilder: (BuildContext context, int index) {
+              return TodoItem(
+                isCompleted: true,
+                index: index,
+              );
+            },
+          ),
         ),
-
+    
         AddTodoButton(
-          hintText: 'Añadir actividad...',
-          onSubmit: (String input) {},
+          hintText: 'Añadir actividad...', 
+          onSubmit: (String input) {
+          }, 
         )
+    
       ],
     );
   }
