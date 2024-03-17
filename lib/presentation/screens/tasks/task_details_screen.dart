@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:task_app/presentation/widgets/widgets.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
+
+  static const String name = 'task-details-screen';
+
   const TaskDetailsScreen({super.key});
 
   @override

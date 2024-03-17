@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_app/presentation/widgets/background_waves.dart';
 
 class RegisterScreen extends StatelessWidget {
+
+  static const String name = 'register-screen';
+
   const RegisterScreen({super.key});
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
 
+  final Function onChange;
   final Function validationFunction;
   final String label;
   final InputDecoration? decoration;
@@ -12,12 +13,13 @@ class InputText extends StatelessWidget {
 
   const InputText({
     super.key, 
+    required this.onChange,
     required this.validationFunction, 
     required this.label,
     this.hideInput = false,
     this.decoration, 
     this.inputIcon, 
-    this.inputIconColor,
+    this.inputIconColor, 
   });
 
   @override
@@ -28,9 +30,9 @@ class InputText extends StatelessWidget {
       prefixIconColor: inputIconColor,
       helperText: '',
       helperMaxLines: 1,
-      helperStyle: const TextStyle(height: 0.3),
-      errorMaxLines: 1,
-      errorStyle: const TextStyle(height: 0.3),
+      helperStyle: const TextStyle(height: 1),
+      errorMaxLines: 2,
+      errorStyle: const TextStyle(height: 1, overflow: TextOverflow.ellipsis),
       errorText: null,
       labelText: label,
       border: OutlineInputBorder(
@@ -39,6 +41,7 @@ class InputText extends StatelessWidget {
     );
 
     return TextFormField(
+      onChanged: (value) => onChange( value ),
       obscureText: hideInput!,
       textAlignVertical: TextAlignVertical.top,
       decoration: ( decoration == null ) ? defaultDecoration : decoration,

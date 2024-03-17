@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:task_app/domain/entities/entitites.dart';
+import 'package:task_app/presentation/providers/auth/auth_provider.dart';
+import 'package:task_app/presentation/providers/auth/login_form_state.dart';
+import 'package:task_app/presentation/utils/form_validators.dart';
 import 'package:task_app/presentation/widgets/background_waves.dart';
 import 'package:task_app/presentation/widgets/input_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
+
+  static const String name = 'login-screen';
+
   const LoginScreen({super.key});
 
   @override
@@ -80,79 +89,98 @@ class _BottomText extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatefulWidget {
+class _LoginForm extends ConsumerStatefulWidget {
   const _LoginForm();
 
   @override
-  State<_LoginForm> createState() => __LoginFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class __LoginFormState extends State<_LoginForm> {
+class _LoginFormState extends ConsumerState<_LoginForm> {
 
   final _loginFormKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+
+    ref.read( loginFormProvider.notifier );
+  }
+
+  @override
   Widget build(BuildContext context) {
 
+    ref.listen<Auth>(authProvider, (_, authState) {
+      if (authState.isActive) {
+        // Usando GoRouter para cambiar a la pantalla principal
+        // Asegúrate de obtener el contexto correcto que tenga acceso al GoRouter
+        GoRouter.of(context).go('/home');
+      }
+      // Maneja aquí los casos en los que el login no sea exitoso, si es necesario
+    });
+
     final colorScheme = Theme.of(context).colorScheme;
+    // final FormState = ref.watch( loginFormProvider );
+    final formNotifier = ref.read( loginFormProvider.notifier );
+    final authNotifier = ref.watch( authProvider.notifier );
+
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 32),
       // color: Colors.amber.withOpacity(0.2),
       child: Form(
         key: _loginFormKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(height: 20,),
-            InputText( 
-              inputIcon: const Icon( Icons.person ),
-              inputIconColor: colorScheme.primary,
-              label: 'Username', 
-              validationFunction: validateUsername, 
-            ),
-            const SizedBox( height: 18,),
-            InputText( 
-              inputIcon: const Icon( Icons.key_outlined ),
-              inputIconColor: colorScheme.primary,
-              label: 'Password', 
-              validationFunction: validatePassword,
-              hideInput: true,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: _SubmitButton(loginFormKey: _loginFormKey),
-            )
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 20,),
+              InputText( 
+                onChange: formNotifier.setUsername,
+                inputIcon: const Icon( Icons.person ),
+                inputIconColor: colorScheme.primary,
+                label: 'Username', 
+                validationFunction: FormValidators.validateUsername, 
+              ),
+              const SizedBox( height: 10),
+              InputText( 
+                onChange: formNotifier.setPassword,
+                inputIcon: const Icon( Icons.key_outlined ),
+                inputIconColor: colorScheme.primary,
+                label: 'Password', 
+                validationFunction: FormValidators.validatePassword,
+                hideInput: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: _SubmitButton(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    if( _loginFormKey.currentState!.validate() ){
+                      authNotifier.login( formNotifier.getUsername, formNotifier.getPassword );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('creadentials are ok!'))
+                      );
+                    }
+                  }
+                ),
+              )
+            ],
+          ),
         )
       ),
     );
   }
-
-  String? validateUsername( String? input ){
-
-    if( input == null || input.isEmpty ) return 'Please enter a username';
-    if( input.length <= 3 ) return 'Username must be greater than 3';
-    if( input.length >= 15 ) return 'Username must be smaller than 15';
-
-    return null;
-  }
-
-  String? validatePassword( String? input ){
-
-    if( input == null || input.isEmpty ) return 'Please enter ypur password';
-    if( input.length <= 4 ) return 'The password must be greater than 4';
-
-    return null;
-  }
 }
 
 class _SubmitButton extends StatelessWidget {
-  const _SubmitButton({
-    required GlobalKey<FormState> loginFormKey,
-  }) : _loginFormKey = loginFormKey;
 
-  final GlobalKey<FormState> _loginFormKey;
+  final VoidCallback onTap;
+
+  const _SubmitButton({
+    required this.onTap,
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +194,7 @@ class _SubmitButton extends StatelessWidget {
       shadowColor: colorScheme.shadow,
       child: InkWell(
         borderRadius: BorderRadius.circular(14.0),
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          if( _loginFormKey.currentState!.validate() ){
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('creadentials are ok!'))
-            );
-          }
-        },
+        onTap: onTap,
         child: Ink(
           padding: const EdgeInsets.symmetric(horizontal: 100.0, vertical: 12.0),
           decoration: BoxDecoration(
