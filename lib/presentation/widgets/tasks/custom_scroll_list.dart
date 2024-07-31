@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomScrollList extends StatefulWidget {
 
@@ -100,7 +101,12 @@ class CustomSliverAppBar extends StatelessWidget {
           ),
         )
       ),
-      leading: IconButton( onPressed: () {}, icon: Icon( Icons.arrow_back_ios_new_rounded, color: colorScheme.onPrimary, ),),
+      leading: IconButton( 
+        onPressed: () {
+          GoRouter.of(context).pop();
+        }, 
+        icon: Icon( Icons.arrow_back_ios_new_rounded, color: colorScheme.onPrimary, ),
+      ),
       centerTitle: true,
       actions: [
         IconButton(onPressed: (){}, icon: Icon(Icons.more_vert_outlined, color: colorScheme.onPrimary,))

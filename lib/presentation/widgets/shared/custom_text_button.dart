@@ -5,12 +5,16 @@ class CustomTextButton extends StatefulWidget {
   final Color? textColor1;
   final Color? textColor2;
   final String text;
+  final Function onTap;
+  final bool? hasIcon;
 
   const CustomTextButton({
     super.key,
     required this.text,
     this.textColor1 = Colors.blueAccent, 
     this.textColor2 = Colors.blue, 
+    required this.onTap,
+    this.hasIcon = false, 
   });
 
   @override
@@ -33,13 +37,18 @@ class _CustomTextButtonState extends State<CustomTextButton> {
     final textStyles = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTapDown: (_) => _toggleColor(true),
+      onTapDown: (_) {
+        _toggleColor(true);
+        widget.onTap();
+      },
       onTapUp: (_) => _toggleColor(false),
       onTapCancel: () => _toggleColor(false),
       child: Row(
         children: [
           Text(widget.text, style: textStyles.bodyMedium!.copyWith(color: _currentColor)),
-          Icon(Icons.arrow_forward_ios_outlined, size: 16, color: _currentColor)
+          if( widget.hasIcon! ) 
+            Icon(Icons.arrow_forward_ios_outlined, size: 16, color: _currentColor)
+          
         ],
       ),
     );

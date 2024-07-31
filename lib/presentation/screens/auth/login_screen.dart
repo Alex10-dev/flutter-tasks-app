@@ -6,7 +6,7 @@ import 'package:task_app/presentation/providers/auth/auth_provider.dart';
 import 'package:task_app/presentation/providers/auth/login_form_state.dart';
 import 'package:task_app/presentation/utils/form_validators.dart';
 import 'package:task_app/presentation/widgets/background_waves.dart';
-import 'package:task_app/presentation/widgets/input_text_field.dart';
+import 'package:task_app/presentation/widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -41,7 +41,7 @@ class _HeaderText extends StatelessWidget {
     final customTextStyles = Theme.of(context).textTheme;
 
     return Positioned(
-      top: 64,
+      top: 66,
       left: 32,
       child: SizedBox(
         width: 180,
@@ -52,7 +52,7 @@ class _HeaderText extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Welcome Back,', style: customTextStyles.headlineSmall),
-            Text('Sign in!', style: customTextStyles.headlineMedium),
+            Text('Sign in!', style: customTextStyles.displayMedium),
           ]
         ),
       )
@@ -81,7 +81,15 @@ class _BottomText extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Do not have an account?', style: customTextStyles.labelMedium!.copyWith( fontWeight: FontWeight.bold,)),
-            Text('Register now', style: customTextStyles.labelLarge!.copyWith(color: customColorTheme.primary, fontStyle: FontStyle.italic)),
+            // Text('Register now', style: customTextStyles.labelLarge!.copyWith(color: customColorTheme.primary, fontStyle: FontStyle.italic)),
+            CustomTextButton(
+              onTap: () {
+                GoRouter.of(context).go('/register');
+              },
+              text: 'Register Now', 
+              textColor1: Colors.blue, 
+              textColor2: customColorTheme.primary,
+            ),
           ]
         ),
       )
@@ -113,10 +121,8 @@ class _LoginFormState extends ConsumerState<_LoginForm> {
     ref.listen<Auth>(authProvider, (_, authState) {
       if (authState.isActive) {
         // Usando GoRouter para cambiar a la pantalla principal
-        // Asegúrate de obtener el contexto correcto que tenga acceso al GoRouter
         GoRouter.of(context).go('/home');
       }
-      // Maneja aquí los casos en los que el login no sea exitoso, si es necesario
     });
 
     final colorScheme = Theme.of(context).colorScheme;

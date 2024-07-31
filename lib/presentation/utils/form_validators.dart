@@ -37,4 +37,26 @@ class FormValidators {
     return null;
   }
 
+  static String? validateName( String? name ){
+
+    final nameRegExp = RegExp(r"^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s'-]+$");
+
+    if( name == null || name.isEmpty ) return 'Please enter a name';
+    if( name.length <= 3 ) return 'Name must be greater than 3';
+
+    if( !nameRegExp.hasMatch(name) ) return 'Name must not contain special characters';
+
+    return null;
+  }
+
+  static String? validateSurname( String? surname ){
+
+    if( surname == null || surname.isEmpty ) return null;
+
+    final nameRegExp = RegExp(r"^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\s'-]+$");
+    if( !nameRegExp.hasMatch(surname) ) return 'Surname must not contain special characters';
+
+    return null;
+  }
+
 }

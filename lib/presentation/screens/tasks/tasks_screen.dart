@@ -66,7 +66,7 @@ class _TasksViewState extends ConsumerState<_TasksView> {
               return const SizedBox(height: 60);
             } 
             return SlideAnimation(
-              child: TaskCard(index: index)
+              child: TaskCard(index: index, task: allTasks[index])
             );
           },
         childCount: allTasks.length + 1,

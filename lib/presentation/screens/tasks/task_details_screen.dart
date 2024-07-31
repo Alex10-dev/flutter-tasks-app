@@ -19,7 +19,7 @@ class TaskDetailsScreen extends StatelessWidget {
           shape: const CircleBorder(),
           isExtended: false, 
           onPressed: () {
-            
+            print('ejecutando');
           },
           tooltip: 'Add',
           child: Icon(Icons.search, size: 32, color: colorScheme.onPrimary,),

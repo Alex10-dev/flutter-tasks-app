@@ -1,15 +1,23 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:task_app/domain/entities/entitites.dart';
 import 'package:task_app/presentation/widgets/widgets.dart';
 
 class TaskCard extends StatelessWidget {
 
   final int index;
+  final Task task;
 
   const TaskCard({
     super.key, 
-    required this.index
+    required this.index, 
+    required this.task
   });
+
+  String getTaskProgress( Task task ) {
+    return '${ task.todos.length.toString() }/${task.todos.length}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +62,17 @@ class TaskCard extends StatelessWidget {
                       circleBackground: colorScheme.primaryContainer,
                       progressColor: colorScheme.primary,
                       strokeWidth: 13,
-                      text: '6/8',
+                      text: getTaskProgress(task),
                       textStyle: textStyles.labelLarge!.copyWith(color: colorScheme.primary, fontWeight: FontWeight.bold),
                     )
                   ),
                   const SizedBox(width: 14),
-                  _BasicInfoTask(textStyles: textStyles, colorScheme: colorScheme)
+                  _BasicInfoTask(
+                    textStyles: textStyles, 
+                    colorScheme: colorScheme, 
+                    title: task.title,
+                    createdBy: task.createdBy.toString(),
+                  )
                 ],
               ),
               Row(
@@ -69,6 +82,10 @@ class TaskCard extends StatelessWidget {
                     text: 'GO!  ',
                     textColor1: colorScheme.primary,
                     textColor2: colorScheme.onPrimaryContainer,
+                    hasIcon: true,
+                    onTap: () {
+                      GoRouter.of(context).push('/home/details');
+                    },
                   )
                 ],
               )
@@ -83,13 +100,19 @@ class TaskCard extends StatelessWidget {
 
 
 class _BasicInfoTask extends StatelessWidget {
-  const _BasicInfoTask({
-    required this.textStyles,
-    required this.colorScheme,
-  });
+
+  final String title;
+  final String createdBy;
 
   final TextTheme textStyles;
   final ColorScheme colorScheme;
+
+  const _BasicInfoTask({
+    required this.textStyles,
+    required this.colorScheme, 
+    required this.title, 
+    required this.createdBy,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +124,14 @@ class _BasicInfoTask extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Titulo de la nueva tarea para pruebas', 
+              title, 
               style: textStyles.titleMedium!.copyWith(fontSize: 18, height: 1.2), 
               maxLines: 2, 
               overflow: TextOverflow.ellipsis 
             ),
             const SizedBox(height: 6,),
             Text(
-              'Creado por: Alexis Orozco Hernandez',
+              'Creado por: $createdBy',
               style: textStyles.bodySmall!.copyWith(color: colorScheme.outline),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
